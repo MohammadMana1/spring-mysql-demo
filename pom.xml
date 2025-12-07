@@ -64,17 +64,17 @@
         </plugins>
     </build>
 
-    <!-- FIXED: NEXUS URL FOR JENKINS OUTSIDE K8S -->
+    <!-- ⭐ FIXED FOR JENKINS OUTSIDE K8S ⭐ -->
     <distributionManagement>
 
         <repository>
             <id>nexus-releases</id>
-            <url>http://host.docker.internal:30081/repository/maven-releases/</url>
+            <url>http://192.168.1.30:30081/repository/maven-releases/</url>
         </repository>
 
         <snapshotRepository>
             <id>nexus-snapshots</id>
-            <url>http://host.docker.internal:30081/repository/maven-snapshots/</url>
+            <url>http://192.168.1.30:30081/repository/maven-snapshots/</url>
         </snapshotRepository>
 
     </distributionManagement>
