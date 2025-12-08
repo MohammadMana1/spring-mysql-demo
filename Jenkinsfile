@@ -1,22 +1,38 @@
 pipeline {
     agent any
 
+    environment {
+        // Internal Nexus DNS inside Kubernetes
+        NEXUS_URL = "http://nexus-service.final-k8s.svc.cluster.local:8081"
+    }
+
     stages {
+
         stage('Checkout') {
             steps {
                 checkout scm
             }
         }
+
         stage('Build') {
             steps {
-                // Use the Maven Wrapper so Jenkins does not need Maven preinstalled
                 sh './mvnw clean package -DskipTests'
             }
         }
+
         stage('Publish to Nexus') {
             steps {
-                // This will run "mvn deploy" using your pom.xml config
-                sh './mvnw deploy -DskipTests'
+                sh """
+                    ./mvnw deploy -DskipTests \
+                    -Dnexus.url=${NEXUS_URL}
+                """
+            }
+        }
+
+        stage('Verify Artifact') {
+            steps {
+                sh "ls -l target/"
+                echo "Artifact deployed to Nexus at ${NEXUS_URL}"
             }
         }
     }
