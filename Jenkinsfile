@@ -5,8 +5,7 @@ pipeline {
 
         stage('Checkout') {
             steps {
-                git branch: 'main',
-                    url: 'https://github.com/MohammadMana1/spring-mysql-demo.git'
+                git branch: 'main', url: 'https://github.com/MohammadMana1/spring-mysql-demo.git'
             }
         }
 
@@ -19,12 +18,6 @@ pipeline {
         stage('Publish to Nexus') {
             steps {
                 sh "./mvnw deploy -DskipTests"
-            }
-        }
-
-        stage('Verify Artifact') {
-            steps {
-                sh "curl -I http://10.100.251.249:8081/repository/maven-snapshots/"
             }
         }
     }
