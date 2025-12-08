@@ -2,37 +2,32 @@ pipeline {
     agent any
 
     environment {
-        // Internal Nexus DNS inside Kubernetes
-        NEXUS_URL = "http://nexus-service.final-k8s.svc.cluster.local:8081"
+        NEXUS_URL = "http://192.168.49.2:30081"
     }
 
     stages {
 
         stage('Checkout') {
             steps {
-                checkout scm
+                git branch: 'main', url: 'https://github.com/MohammadMana1/spring-mysql-demo.git'
             }
         }
 
         stage('Build') {
             steps {
-                sh './mvnw clean package -DskipTests'
+                sh "./mvnw clean package -DskipTests"
             }
         }
 
         stage('Publish to Nexus') {
             steps {
-                sh """
-                    ./mvnw deploy -DskipTests \
-                    -Dnexus.url=${NEXUS_URL}
-                """
+                sh "./mvnw deploy -DskipTests"
             }
         }
 
         stage('Verify Artifact') {
             steps {
-                sh "ls -l target/"
-                echo "Artifact deployed to Nexus at ${NEXUS_URL}"
+                sh "curl -I ${NEXUS_URL}/repository/maven-snapshots/"
             }
         }
     }
