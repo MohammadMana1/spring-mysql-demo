@@ -9,7 +9,6 @@
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>4.0.0</version>
-        <relativePath/>
     </parent>
 
     <groupId>com.example</groupId>
@@ -18,9 +17,6 @@
 
     <properties>
         <java.version>17</java.version>
-
-        <!-- use ClusterIP instead of DNS -->
-        <nexus.url>http://10.100.251.249:8081</nexus.url>
     </properties>
 
     <dependencies>
@@ -66,12 +62,12 @@
     <distributionManagement>
         <repository>
             <id>nexus-releases</id>
-            <url>${nexus.url}/repository/maven-releases/</url>
+            <url>http://192.168.49.2:30081/repository/maven-releases/</url>
         </repository>
 
         <snapshotRepository>
             <id>nexus-snapshots</id>
-            <url>${nexus.url}/repository/maven-snapshots/</url>
+            <url>http://192.168.49.2:30081/repository/maven-snapshots/</url>
         </snapshotRepository>
     </distributionManagement>
 
