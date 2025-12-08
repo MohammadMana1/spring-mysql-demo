@@ -2,7 +2,6 @@ pipeline {
     agent any
 
     stages {
-
         stage('Checkout') {
             steps {
                 git branch: 'main', url: 'https://github.com/MohammadMana1/spring-mysql-demo.git'
@@ -17,7 +16,7 @@ pipeline {
 
         stage('Publish to Nexus') {
             steps {
-                sh "./mvnw deploy -DskipTests"
+                sh "./mvnw deploy -DskipTests -Dnexus.url=http://nexus-service:8081"
             }
         }
     }
