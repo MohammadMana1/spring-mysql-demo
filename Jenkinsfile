@@ -5,7 +5,8 @@ pipeline {
 
         stage('Checkout') {
             steps {
-                git 'https://github.com/MohammadMana1/spring-mysql-demo.git'
+                git branch: 'main',
+                    url: 'https://github.com/MohammadMana1/spring-mysql-demo.git'
             }
         }
 
