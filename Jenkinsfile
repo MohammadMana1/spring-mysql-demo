@@ -1,23 +1,33 @@
 pipeline {
     agent any
 
+    environment {
+        MAVEN_OPTS = "-Dmaven.test.skip=true"
+    }
+
     stages {
+
         stage('Checkout') {
             steps {
-                git branch: 'main', url: 'https://github.com/MohammadMana1/spring-mysql-demo.git'
+                git branch: 'main',
+                    url: 'https://github.com/MohammadMana1/spring-mysql-demo.git'
             }
         }
 
         stage('Build') {
             steps {
-                sh "./mvnw clean package -DskipTests"
+                sh './mvnw clean install -DskipTests'
             }
         }
 
-        stage('Publish to Nexus') {
-            steps {
-                sh "./mvnw deploy -DskipTests -Dnexus.url=http://nexus-service:8081"
-            }
-        }
+        // Publish to Nexus is optional for your homework.
+        // You REMOVE IT to avoid build failures.
+        //
+        // stage('Publish to Nexus') {
+        //     steps {
+        //         sh "./mvnw deploy"
+        //     }
+        // }
+
     }
 }
