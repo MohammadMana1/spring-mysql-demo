@@ -2,7 +2,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
-    
+
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.example</groupId>
@@ -10,6 +10,7 @@
     <version>0.0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
 
+    <!-- 🔥 THIS WAS MISSING OR BROKEN in your last commit -->
     <properties>
         <java.version>17</java.version>
         <spring.boot.version>3.2.5</spring.boot.version>
@@ -20,9 +21,9 @@
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>${spring.boot.version}</version>
+        <relativePath/>  <!-- THIS FIXES LOCAL POM ERRORS -->
     </parent>
 
-    <!-- Dependencies -->
     <dependencies>
         <!-- Web -->
         <dependency>
@@ -30,35 +31,27 @@
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
 
-        <!-- MySQL -->
-        <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-j</artifactId>
-        </dependency>
-
         <!-- JPA -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
         </dependency>
+
+        <!-- MySQL -->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-j</artifactId>
+        </dependency>
     </dependencies>
 
-    <!-- Build Plugins -->
     <build>
         <plugins>
 
-            <!-- Build executable Spring Boot jar -->
+            <!-- Build executable JAR -->
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <version>${spring.boot.version}</version>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>repackage</goal>
-                        </goals>
-                    </execution>
-                </executions>
             </plugin>
 
             <!-- Deploy to Nexus -->
@@ -71,11 +64,10 @@
         </plugins>
     </build>
 
-    <!-- Nexus Repository Config -->
+    <!-- Nexus repositories (default namespace) -->
     <distributionManagement>
         <snapshotRepository>
             <id>nexus-snapshots</id>
-            <!-- ⭐ WORKS in default namespace -->
             <url>http://nexus-service:8081/repository/maven-snapshots/</url>
         </snapshotRepository>
 
