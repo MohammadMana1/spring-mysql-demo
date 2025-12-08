@@ -18,7 +18,9 @@
 
     <properties>
         <java.version>17</java.version>
-        <nexus.url>http://nexus-service.final-k8s.svc.cluster.local:8081</nexus.url>
+
+        <!-- use ClusterIP instead of DNS -->
+        <nexus.url>http://10.100.251.249:8081</nexus.url>
     </properties>
 
     <dependencies>
@@ -50,7 +52,6 @@
             <version>5.10.2</version>
             <scope>test</scope>
         </dependency>
-
     </dependencies>
 
     <build>
